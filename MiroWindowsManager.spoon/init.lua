@@ -245,6 +245,10 @@ function obj:bindHotkeys(modal, mapping)
     self:_moveNextScreenStep()
   end)
 
+  modal:bind(mapping.center[1], mapping.center[2], function ()
+    hs.window.frontmostWindow():centerOnScreen()
+  end)
+
 end
 
 function obj:init()
