@@ -172,11 +172,16 @@ end
 ---   nextscreen = {hyper, "n"}
 --- })
 --- ```
-function obj:bindHotkeys(mapping)
+function obj:bindHotkeys(modal, mapping)
   hs.inspect(mapping)
   print("Bind Hotkeys for Miro's Windows Manager")
+  if getmetatable(modal) == hs.hotkey.modal then
+    print("is modal")
+  else
+    print("is not modal")
+  end
 
-  hs.hotkey.bind(mapping.down[1], mapping.down[2], function ()
+  modal:bind(mapping.down[1], mapping.down[2], function ()
     self._pressed.down = true
     if self._pressed.up then 
       self:_fullDimension('h')
@@ -190,7 +195,7 @@ function obj:bindHotkeys(mapping)
     self._pressed.down = false
   end)
 
-  hs.hotkey.bind(mapping.right[1], mapping.right[2], function ()
+  modal:bind(mapping.right[1], mapping.right[2], function ()
     self._pressed.right = true
     if self._pressed.left then 
       self:_fullDimension('w')
@@ -204,7 +209,7 @@ function obj:bindHotkeys(mapping)
     self._pressed.right = false
   end)
 
-  hs.hotkey.bind(mapping.left[1], mapping.left[2], function ()
+  modal:bind(mapping.left[1], mapping.left[2], function ()
     self._pressed.left = true
     if self._pressed.right then 
       self:_fullDimension('w')
@@ -218,7 +223,7 @@ function obj:bindHotkeys(mapping)
     self._pressed.left = false
   end)
 
-  hs.hotkey.bind(mapping.up[1], mapping.up[2], function ()
+  modal:bind(mapping.up[1], mapping.up[2], function ()
     self._pressed.up = true
     if self._pressed.down then 
         self:_fullDimension('h')
@@ -232,11 +237,11 @@ function obj:bindHotkeys(mapping)
     self._pressed.up = false
   end)
 
-  hs.hotkey.bind(mapping.fullscreen[1], mapping.fullscreen[2], function ()
+  modal:bind(mapping.fullscreen[1], mapping.fullscreen[2], function ()
     self:_nextFullScreenStep()
   end)
 
-  hs.hotkey.bind(mapping.nextscreen[1], mapping.nextscreen[2], function ()
+  modal:bind(mapping.nextscreen[1], mapping.nextscreen[2], function ()
     self:_moveNextScreenStep()
   end)
 
